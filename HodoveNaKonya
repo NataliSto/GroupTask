@@ -1,0 +1,97 @@
+package GroupTask;
+
+import java.util.Scanner;
+
+public class HodoveNaKonya {
+		public static void main(String[] args) {
+			Scanner sc = new Scanner(System.in);
+			
+			System.out.println ("Enter number of colums");
+			int m = sc.nextInt();
+			System.out.println ("Enter number of rows");
+			int n = sc.nextInt();
+			
+			int[][] board = new int[n][m];
+			
+			for(int i=0; i<n; i++){
+				for(int j=0; j<m; j++){
+					board[i][j]=-1;
+				}
+			}
+			
+			int col=-1, row = -1;
+			while(col<=0 || col>m || row<=0 || row>n){
+				System.out.println ("Column number");
+				col = sc.nextInt();
+				System.out.println ("Row number");
+				row = sc.nextInt();
+			}
+			
+			theTour(--col, --row, board);
+			
+			sc.close();
+		}
+		
+		static void theTour(int col, int row, int [][] board){
+			int xMove[] = { 2, 1, -1, -2, -2, -1, 1, 2 };
+	        int yMove[] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+	        board[row][col] = 0;
+	        findWay(col, row, 1, xMove, yMove, board);
+	        
+	        Print(board);
+	 
+		}
+		
+		 private static boolean findWay(int col, int row, int moveNum,  int xMove[],int yMove[], int[][] board)
+		    {
+		        int next_row, next_col;
+		        if (moveNum == board[1].length * board.length){
+		        	return true;
+		        }
+		            
+		 
+		        for (int k = 0; k < 8; k++)
+		        {
+		            next_row = row + xMove[k];
+		            next_col = col + yMove[k];
+		            if (onBoard(next_row, next_col, board))
+		            {
+		                board[next_row][next_col] = moveNum;
+		                if (findWay(next_col, next_row,  moveNum + 1, xMove, yMove, board)){
+		                    return true;
+		                }
+		                else
+		                	board[next_row][next_col] = -1;
+		            }
+		            else{
+		            	row = next_row - xMove[k];
+		            	col = next_col - yMove[k];
+		            }
+		        }
+		        return false;
+		    }
+		
+		 private static boolean onBoard(int row, int col, int[][] board)
+		    {
+		        if (row >= 0 && row < board.length && col >= 0 && col < board[0].length && board[row][col] == -1){
+		            return true;
+		        }else{
+		            return false;
+		        }
+		       
+		    }
+		 
+		    private static void Print(int[][] board)
+		    {
+		        for (int row = 0; row < board.length; row++)
+		        {
+		            for (int col = 0; col < board[0].length; col++)
+		            {
+		                System.out.printf(" \t "+ board[row][col]);
+		            }
+		            System.out.println();
+		        }
+		        
+		        System.out.println();
+		    }
+	}
