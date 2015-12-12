@@ -1,168 +1,181 @@
+package GroupTask;
+
 import java.util.Scanner;
 
 public class Kriptografia {
+
 	
-	static int findRow(char[][] board, char letter) {
-		int x = 0;
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board.length; j++) {
-				if (letter == board[i][j]) {
-					x = i;
-					break;
+	
+
+	
+			
+			static int findRow(char[][] board, char letter) {
+				int x = 0;
+				for (int i = 0; i < board.length; i++) {
+					for (int j = 0; j < board.length; j++) {
+						if (letter == board[i][j]) {
+							x = i;
+							break;
+						}
+					}
 				}
-			}+ 
-		}
-		return x;
-	}
-
-	static int findCol(char[][] board, char letter) {
-		int y = 0;
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board.length; j++) {
-				if (letter == board[i][j]) {
-					y = j;
-					break;
-				}
-			}
-		}
-		return y;
-	}
-
-	static String encrypt(char[][] board, String text) {
-
-		char[] text1 = text.toCharArray();
-
-		text = "";
-
-		for (int i = 0; i < text1.length; i += 2) {
-			int c1 = findCol(board, text1[i]);
-			int c2 = findCol(board, text1[i + 1]);
-			int r1 = findRow(board, text1[i]);
-			int r2 = findRow(board, text1[i + 1]);
-			if (r1 == r2) {
-				if (c1 == board.length) {
-					c1 = 0;
-				} else {
-					c1++;
-				}
-				if (c2 == board.length) {
-					c2 = 0;
-				} else {
-					c2++;
-				}
-				text1[i] = board[r1][c1];
-				text1[i + 1] = board[r2][c2];
-
+				return x;
 			}
 
-			if (c1 == c2) {
-				if (r1 == board.length) {
-					r1 = 0;
-				} else {
-					r1++;
+			static int findCol(char[][] board, char letter) {
+				int y = 0;
+				for (int i = 0; i < board.length; i++) {
+					for (int j = 0; j < board.length; j++) {
+						if (letter == board[i][j]) {
+							y = j;
+							break;
+						}
+					}
 				}
-				if (r2 == board.length) {
-					r2 = 0;
-				} else {
-					r2++;
-				}
-				text1[i] = board[r1][c1];
-				text1[i + 1] = board[r2][c2];
-
-			} else {
-				int temp = c1;
-				c1 = c2;
-				c2 = temp;
-				text1[i] = board[r1][c1];
-				text1[i + 1] = board[r2][c2];
-			}
-		}
-		for (int i = 0; i < text1.length; i++) {
-			text += text1[i];
-		}
-
-		return text;
-	}
-
-	static String decrypt(char[][] board, String text) {
-
-		char[] text1 = text.toCharArray();
-
-		text = "";
-
-		for (int i = 0; i < text1.length; i += 2) {
-			int c1 = findCol(board, text1[i]);
-			int c2 = findCol(board, text1[i + 1]);
-			int r1 = findRow(board, text1[i]);
-			int r2 = findRow(board, text1[i + 1]);
-			if (r1 == r2) {
-				if (c1 == 0) {
-					c1 = board.length - 1;
-				} else {
-					c1--;
-				}
-				if (c2 == 0) {
-					c2 = board.length - 1;
-				} else {
-					c2--;
-				}
-				text1[i] = board[r1][c1];
-				text1[i + 1] = board[r2][c2];
-
+				return y;
 			}
 
-			if (c1 == c2) {
-				if (r1 == 0) {
-					r1 = board.length - 1;
-				} else {
-					r1--;
-				}
-				if (r2 == 0) {
-					r2 = board.length - 1;
-				} else {
-					r2--;
-				}
-				text1[i] = board[r1][c1];
-				text1[i + 1] = board[r2][c2];
+			static String encrypt(char[][] board, String text) {
 
-			} else {
-				int temp = c2;
-				c2 = c1;
-				c1 = temp;
-				text1[i] = board[r1][c1];
-				text1[i + 1] = board[r2][c2];
+				char[] text1 = text.toCharArray();
+
+				text = "";
+
+				for (int i = 0; i < text1.length; i += 2) {
+					int c1 = findCol(board, text1[i]);
+					int c2 = findCol(board, text1[i + 1]);
+					int r1 = findRow(board, text1[i]);
+					int r2 = findRow(board, text1[i + 1]);
+					if (r1 == r2) {
+						if (c1 == board.length) {
+							c1 = 0;
+						} else {
+							c1++;
+						}
+						if (c2 == board.length) {
+							c2 = 0;
+						} else {
+							c2++;
+						}
+						text1[i] = board[r1][c1];
+						text1[i + 1] = board[r2][c2];
+
+					}
+
+					if (c1 == c2) {
+						if (r1 == board.length) {
+							r1 = 0;
+						} else {
+							r1++;
+						}
+						if (r2 == board.length) {
+							r2 = 0;
+						} else {
+							r2++;
+						}
+						text1[i] = board[r1][c1];
+						text1[i + 1] = board[r2][c2];
+
+					} else {
+						int temp = c1;
+						c1 = c2;
+						c2 = temp;
+						text1[i] = board[r1][c1];
+						text1[i + 1] = board[r2][c2];
+					}
+				}
+				for (int i = 0; i < text1.length; i++) {
+					text += text1[i];
+				}
+
+				return text;
 			}
-		}
 
-		for (int i = 0; i < text1.length; i++) {
-			text += text1[i];
-		}
+			static String decrypt(char[][] board, String text) {
 
-		return text;
+				char[] text1 = text.toCharArray();
+
+				text = "";
+
+				for (int i = 0; i < text1.length; i += 2) {
+					int c1 = findCol(board, text1[i]);
+					int c2 = findCol(board, text1[i + 1]);
+					int r1 = findRow(board, text1[i]);
+					int r2 = findRow(board, text1[i + 1]);
+					if (r1 == r2) {
+						if (c1 == 0) {
+							c1 = board.length - 1;
+						} else {
+							c1--;
+						}
+						if (c2 == 0) {
+							c2 = board.length - 1;
+						} else {
+							c2--;
+						}
+						text1[i] = board[r1][c1];
+						text1[i + 1] = board[r2][c2];
+
+					}
+
+					if (c1 == c2) {
+						if (r1 == 0) {
+							r1 = board.length - 1;
+						} else {
+							r1--;
+						}
+						if (r2 == 0) {
+							r2 = board.length - 1;
+						} else {
+							r2--;
+						}
+						text1[i] = board[r1][c1];
+						text1[i + 1] = board[r2][c2];
+
+					} else {
+						int temp = c2;
+						c2 = c1;
+						c1 = temp;
+						text1[i] = board[r1][c1];
+						text1[i + 1] = board[r2][c2];
+					}
+				}
+
+				for (int i = 0; i < text1.length; i++) {
+					text += text1[i];
+				}
+
+				return text;
+			}
+
+			public static void main(String[] args) {
+				char[][] board = { { 'I', 'F', 'B', 'X', 'Y' },
+						{ 'A', 'O', 'J', 'E', 'T' }, { 'G', 'L', 'R', 'M', 'U' },
+						{ 'Q', 'N', 'H', 'D', 'V' }, { 'C', 'S', 'P', 'W', 'K' } };
+
+				Scanner sc = new Scanner(System.in);
+
+				System.out.println("Enter text:");
+				String text = sc.next();
+
+				text = text.toUpperCase();
+
+				if (text.length() % 2 != 0) {
+					text = text + "A";
+				}
+
+				String encrypt = encrypt(board, text);
+
+				String decrypt = decrypt(board, encrypt);
+
+				System.out.print("The text is " + text + ". \n The encrypted text is "
+						+ encrypt + " \n The decrypted text is " + decrypt);
+				sc.close();
+			
+		
+	
+
+
 	}
 
-	public static void main(String[] args) {
-		char[][] board = { { 'I', 'F', 'B', 'X', 'Y' },
-				{ 'A', 'O', 'J', 'E', 'T' }, { 'G', 'L', 'R', 'M', 'U' },
-				{ 'Q', 'N', 'H', 'D', 'V' }, { 'C', 'S', 'P', 'W', 'K' } };
-
-		Scanner sc = new Scanner(System.in);
-
-		System.out.println("Enter text:");
-		String text = sc.next();
-
-		text = text.toUpperCase();
-
-		if (text.length() % 2 != 0) {
-			text = text + "A";
-		}
-
-		String encrypt = encrypt(board, text);
-
-		String decrypt = decrypt(board, encrypt);
-
-		System.out.print("The text is " + text + ". \n The encrypted text is "
-				+ encrypt + " \n The decrypted text is " + decrypt);
-		sc.close();
-	}
 }
